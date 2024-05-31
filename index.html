@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>係数計算ツール</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9e4c0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 30px #ff733b85;
+    }
+
+    form p {
+      margin: 3px 0;
+    }
+
+    input {
+      width: calc(100% - 12px);
+      padding: 6px;
+      border: 1px solid #d35e2f;
+      border-radius: 4px;
+    }
+
+    .calculate-button {
+      background-color: #1a9166;
+      color: #fff;
+      padding: 5px 77px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .reset-button {
+      background-color: #f67365;
+      color: #fff;
+      padding: 5px 17px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .calculate-button:hover {
+      background-color: #14704e;
+    }
+
+    .reset-button:hover {
+      background-color: #8a322796;
+    }
+
+    output {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    p.creator {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #7b71ec;
+    }
+
+    input[type="checkbox"] {
+      margin-right: -320px;
+    }
+
+    .section {
+      padding: 5px;
+      border-radius: 12px;
+      border: 2px solid;
+    }
+
+    p.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+    .sectionA {
+      border-color: #ff00006b;
+    }
+
+    .sectionB {
+      border-color: #000dff6b;
+    }
+  </style>
+</head>
+
+<body>
+  <form>
+    <div class="section sectionA">
+      <p>自分のステータス</p>
+      <p>基礎値(係数) <input type="number" name="a" id="a"></p>
+      <p>加算値(ダメ) <input type="number" name="b" id="b"></p>
+      <p>乗算値(ダメージ乗算) <input type="number" name="c" id="c"></p>
+    </div>
+<p>
+    <div class="section sectionB">
+      <p>ペット受動ステータス</p>
+      <p class="checkbox-container"><input type="checkbox" name="hr1" id="hr1"> HR1(乗算)</p>
+      <p class="checkbox-container"><input type="checkbox" name="hr2" id="hr2"> HR2(乗算)</p>
+      <p class="checkbox-container"><input type="checkbox" name="ur1" id="ur1"> UR1(乗算)</p>
+      <p class="checkbox-container"><input type="checkbox" name="ur2" id="ur2"> UR2(乗算)</p>
+      <p class="checkbox-container"><input type="checkbox" name="sr" id="sr"> SR(乗算)</p>
+      <p class="checkbox-container"><input type="checkbox" name="r" id="r"> R(加算)</p>
+    </div>
+
+    <p>
+      <button class="calculate-button" type="button" onclick="calculateResult()">計算する</button>
+      <button class="reset-button" type="reset" onclick="resetForm()">リセット</button>
+    </p>
+
+    <p>係数: <output name="result" for="a b c d f g"> 0</output>　　　　s47きくらげ</p>
+  </form>
+
+  <script>
+    function calculateResult() {
+      var resultOutput = document.querySelector('output[name="result"]');
+      var a = Number(document.getElementById('a').value);
+      var b = Number(document.getElementById('b').value);
+      var c = Number(document.getElementById('c').value);
+      var hr1 = document.getElementById('hr1').checked;
+      var hr2 = document.getElementById('hr2').checked;
+      var ur1 = document.getElementById('ur1').checked;
+      var ur2 = document.getElementById('ur2').checked;
+      var sr = document.getElementById('sr').checked;
+      var r = document.getElementById('r').checked;
+
+      if (hr1) c += 7.5;
+      if (hr2) c += 7.5;
+      if (ur1) c += 5;
+      if (ur2) c += 5;
+      if (sr) c += 5;
+      if (r) b += 150;
+
+      var result = (a + b) * ((100 + c) / 100);
+
+      resultOutput.textContent = result.toFixed(2) + '%';
+    }
+
+    function resetForm() {
+      var resultOutput = document.querySelector('output[name="result"]');
+      resultOutput.textContent = '0';
+    }
+  </script>
+</body>
+
+</html>
